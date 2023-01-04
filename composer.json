@@ -1,0 +1,32 @@
+{
+    "name": "shurjomukhi/eloquent-repo-lib",
+    "description": "Repository pattern library for Eloquent Illuminate Entity models",
+    "type": "library",
+    "keywords": [ "eloquent", "repository", "library", "laravel" ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Imtiaz Rahi",
+            "email": "",
+            "homepage": "https://twitter.com/EvilFreelancer",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.4",
+        "ext-json": "*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ComposerJson\\": "./src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "ComposerJson\\Tests\\": "./tests/"
+        }
+    }
+}
