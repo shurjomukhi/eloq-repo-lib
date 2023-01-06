@@ -1,4 +1,4 @@
-/vendor/
+vendor/
 node_modules/
 npm-debug.log
 yarn-error.log
@@ -19,5 +19,27 @@ storage/*.key
 .env
 Homestead.yaml
 Homestead.json
-/.vagrant
+.vagrant
 .phpunit.result.cache
+
+# ignore Editor files
+.project
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+.settings/
+
+# Ignore user created files
+*.bak
+*.orig
+
+# ignore OS generated files
+ehthumbs.db
+Thumbs.db
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+

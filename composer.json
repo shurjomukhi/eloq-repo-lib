@@ -1,20 +1,23 @@
 {
     "name": "shurjomukhi/eloquent-repo-lib",
-    "description": "Repository pattern library for Eloquent Illuminate Entity models",
+    "description": "Generic repository pattern library for Eloquent Illuminate Entity models",
     "type": "library",
-    "keywords": [ "eloquent", "repository", "library", "laravel" ],
+    "keywords": [ "eloquent", "repository", "library", "laravel", "inheritance", "inversioncontrol" ],
     "license": "MIT",
+    "homepage": "https://github.com/shurjomukhi/eloq-repo-lib",
+    "time": "2023-01-07",
     "authors": [
         {
             "name": "Imtiaz Rahi",
-            "email": "",
-            "homepage": "https://twitter.com/EvilFreelancer",
+            "email": "imtiaz.rahi@gmail.com",
+            "homepage": "https://github.com/imtiaz-rahi",
             "role": "Developer"
         }
     ],
     "require": {
         "php": "^7.4",
-        "ext-json": "*"
+        "ext-json": "*",
+        "illuminate/database": "^7.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.0"
