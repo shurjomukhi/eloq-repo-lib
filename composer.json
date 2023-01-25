@@ -2,17 +2,14 @@
     "name": "shurjomukhi/eloquent-repo-lib",
     "description": "Generic repository pattern library for Eloquent Illuminate Entity models",
     "type": "library",
-    "keywords": [ "eloquent", "repository", "library", "laravel", "inheritance", "inversioncontrol" ],
-    "license": "MIT",
-    "homepage": "https://github.com/shurjomukhi/eloq-repo-lib",
-    "time": "2023-01-07",
-    "authors": [
-        {
-            "name": "Imtiaz Rahi",
-            "email": "imtiaz.rahi@gmail.com",
-            "homepage": "https://github.com/imtiaz-rahi",
-            "role": "Developer"
-        }
+    "version": "0.1.0",
+    "keywords": [
+        "eloquent",
+        "repository",
+        "library",
+        "laravel",
+        "inheritance",
+        "inversioncontrol"
     ],
     "require": {
         "php": "^7.4",
@@ -30,6 +27,23 @@
     "autoload-dev": {
         "psr-4": {
             "ComposerJson\\Tests\\": "./tests/"
+        }
+    },
+    "license": "MIT",
+    "homepage": "https://github.com/shurjomukhi/eloq-repo-lib",
+    "time": "2023-01-07",
+    "authors": [
+        {
+            "name": "Imtiaz Rahi",
+            "email": "imtiaz.rahi@gmail.com",
+            "homepage": "https://github.com/imtiaz-rahi",
+            "role": "Developer"
+        }
+    ],
+    "repositories": {
+        "repo-sm": {
+            "type": "composer",
+            "url": "https://nexusrepo.shurjomukhi.com.bd/repository/php-composer/"
         }
     }
 }

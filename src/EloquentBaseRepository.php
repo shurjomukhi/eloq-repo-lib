@@ -6,16 +6,16 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Base implementation of repository interface to accommodate Eloquent models.
+ * Base implementation of repository interface to accommodate Eloquent entity models.
  *
- * @package App\Interfaces
+ * @package EloquentRepo
  * @author Imtiaz Rahi
  * @since 2022-11-06
  * @see https://dev.to/carlomigueldy/getting-started-with-repository-pattern-in-laravel-using-inheritance-and-dependency-injection-2ohe
  */
 class EloquentBaseRepository implements EloquentRepositoryInterface
 {
-    /** Name of the database model */
+    /** Eloquent entity model type class representing the database table */
     protected $model;
 
     public function __construct(Model $model)
@@ -33,11 +33,21 @@ class EloquentBaseRepository implements EloquentRepositoryInterface
         return $this->model->select($columns)->with($relations)->findOrFail($recordId)->append($appends);
     }
 
+    public function findByCode($code, array $columns = ['*']): ?Model
+    {
+        return $this->model->select($columns)->where('code', $code)->first();
+    }
+
     public function create(array $payload): ?Model
     {
         if ($this->fixPayload($payload) == null) return false;
         $model = $this->model->create($payload);
         return $model->fresh();
+    }
+
+    public function save(array $payload): ?Model
+    {
+        return $this->create($payload);
     }
 
     public function update($recordId, array $payload): bool
@@ -53,12 +63,15 @@ class EloquentBaseRepository implements EloquentRepositoryInterface
      * @param $data
      * @return array
      */
-    private function fixPayload($data): array {
+    private function fixPayload($data): array
+    {
         switch (gettype($data)) {
-            case "array": return $data;
-            break;
-            case "object": return $data->attributesToArray();
-            break;
+            case "array":
+                return $data;
+                break;
+            case "object":
+                return $data->attributesToArray();
+                break;
         }
         return false;
     }
@@ -101,12 +114,7 @@ class EloquentBaseRepository implements EloquentRepositoryInterface
         return $this->model->withTrashed()->findOrFail($recordId);
     }
 
-    public function save(array $payload): ?Model
-    {
-        return $this->create($payload);
-    }
-
-    public function find($recordId, array $criteria = [], array $columns = ['*'], array $relations = [], array $appends = []): ?Collection
+    public function find(array $criteria = [], array $columns = ['*'], array $relations = [], array $appends = []): ?Collection
     {
         return $this->model->with($relations)->where($criteria)->get($columns);
     }

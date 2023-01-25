@@ -6,10 +6,14 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * Repository interface to accommodate Eloquent models.
+ * Repository interface to accommodate Eloquent entity models.
  * TODO need method with orderBy option
+ * TODO sorting feature
+ * TODO saveAll(array of entities), findAllById(array of ids)
+ * TODO existsById(id);
+ * TODO count
  *
- * @package App\Interfaces
+ * @package EloquentRepo
  * @author Imtiaz Rahi
  * @since 2022-11-06
  * @see https://dev.to/carlomigueldy/getting-started-with-repository-pattern-in-laravel-using-inheritance-and-dependency-injection-2ohe
@@ -18,7 +22,7 @@ interface EloquentRepositoryInterface
 {
 
     /**
-     * Get all models.
+     * Get all rows from the database table as Collection of Model.
      *
      * @param array $columns Columns of a DB table
      * @param array $relations
@@ -27,7 +31,7 @@ interface EloquentRepositoryInterface
     public function all(array $columns = ['*'], array $relations = []): Collection;
 
     /**
-     * Find model by record id.
+     * Find a row by record id and get the object as Model instance.
      *
      * @param mixed $recordId Record id
      * @param array $columns
@@ -37,8 +41,12 @@ interface EloquentRepositoryInterface
      */
     public function findById($recordId, array $columns = ['*'], array $relations = [], array $appends = []): ?Model;
 
+    /** Get a record by short, unique <i><b>code</b></i> column */
+    public function findByCode($code, array $columns = ['*']): ?Model;
+
     /**
-     * Create a model with payload.
+     * Create or save an entity model in database with the provided data payload.
+     * Returns the inserted Model with record id.
      *
      * @param array $payload
      * @return Model|null
@@ -46,7 +54,17 @@ interface EloquentRepositoryInterface
     public function create(array $payload): ?Model;
 
     /**
-     * Update existing model.
+     * Create or save an entity model in database with the provided data payload.
+     * Returns the inserted Model with record id.
+     * Provides same functionality as the create method.
+     *
+     * @param array $payload
+     * @return Model|null
+     */
+    public function save(array $payload): ?Model;
+
+    /**
+     * Update existing entity model from provided data payload.
      *
      * @param mixed $recordId
      * @param array $payload
@@ -98,13 +116,12 @@ interface EloquentRepositoryInterface
     /**
      * Find records with a single where clause.
      *
-     * @param mixed $recordId Record id
      * @param array $criteria Eloquent Where clause
      * @param array $columns Column names (optional)
      * @param array $relations Table relations (optional)
      * @param array $appends
      * @return Collection|null
      */
-    public function find($recordId, array $criteria = [], array $columns = ['*'], array $relations = [], array $appends = []): ?Collection;
+    public function find(array $criteria = [], array $columns = ['*'], array $relations = [], array $appends = []): ?Collection;
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-use EloquentRepo\EloquentBaseRepository;
+use EloquentRepo\ShurjopayBaseRepository;
 use EmployeeRepo;
 use Employee;
 
@@ -10,7 +10,7 @@ use Employee;
  * @author Imtiaz Rahi
  * @since 2023-01-07
  */
-class EmployeeRepoImpl extends EloquentBaseRepository implements EmployeeRepo
+class EmployeeRepoImpl extends ShurjopayBaseRepository implements EmployeeRepo
 {
 
     protected $model;
