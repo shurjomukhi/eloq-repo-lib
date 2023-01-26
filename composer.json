@@ -12,21 +12,21 @@
         "inversioncontrol"
     ],
     "require": {
-        "php": "^7.4",
+        "php": ">=7.2",
         "ext-json": "*",
-        "illuminate/database": "^7.0.0"
+        "illuminate/database": ">=7.0.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^8.0"
+        "phpunit/phpunit": ">=8.0"
     },
     "autoload": {
         "psr-4": {
-            "ComposerJson\\": "./src/"
+            "EloquentRepo\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "ComposerJson\\Tests\\": "./tests/"
+            "Tests\\": "tests/"
         }
     },
     "license": "MIT",
