@@ -108,12 +108,6 @@ interface EloquentRepositoryInterface
     public function findTrashedById($recordId): ?Model;
 
     /**
-     * @param array $payload
-     * @return Model|null
-     */
-    public function save(array $payload): ?Model;
-
-    /**
      * Find records with a single where clause.
      *
      * @param array $criteria Eloquent Where clause
