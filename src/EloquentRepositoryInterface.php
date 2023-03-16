@@ -118,4 +118,23 @@ interface EloquentRepositoryInterface
      */
     public function find(array $criteria = [], array $columns = ['*'], array $relations = [], array $appends = []): ?Collection;
 
+    public function findLimited(array $criteria = [], int $limit, array $columns = ['*'], array $relations = [], array $appends = []): ?Collection;
+
+    /**
+     * Find records with where clause with order by feature and default limit set to 10.
+     * <pre>
+     * findOrderedLimited(['method' => 'bank', 'is_checked' => true], ['full_name'], 15, ['full_name', 'email', 'mobile']);
+     * findOrderedLimited(['count', '=>', 10], ['*'], ['full_name', 'desc'], 15);
+     * 'created_at', '<', now()->subDays(7)
+     * </pre>
+     *
+     * @param array $criteria
+     * @param array $orderBy
+     * @param int $limit Default limit is 10
+     * @param array $columns
+     * @param array $relations
+     * @param array $appends
+     * @return Collection|null
+     */
+    public function findOrderedLimited(array $criteria = [], array $orderBy = [], int $limit, array $columns = ['*'], array $relations = [], array $appends = []): ?Collection;
 }

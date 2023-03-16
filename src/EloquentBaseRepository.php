@@ -12,6 +12,7 @@ use Illuminate\Database\Eloquent\Model;
  * @author Imtiaz Rahi
  * @since 2022-11-06
  * @see https://dev.to/carlomigueldy/getting-started-with-repository-pattern-in-laravel-using-inheritance-and-dependency-injection-2ohe
+ * @see https://github.com/carlomigueldy/laravel-repository-pattern
  */
 class EloquentBaseRepository implements EloquentRepositoryInterface
 {
@@ -116,7 +117,18 @@ class EloquentBaseRepository implements EloquentRepositoryInterface
 
     public function find(array $criteria = [], array $columns = ['*'], array $relations = [], array $appends = []): ?Collection
     {
-        return $this->model->with($relations)->where($criteria)->get($columns);
+        return $this->model->with($relations)->where($criteria)->get($columns)->append($appends);
+    }
+
+    public function findLimited(array $criteria = [], int $limit = 10, array $columns = ['*'], array $relations = [], array $appends = []): ?Collection
+    {
+        return $this->model->with($relations)->where($criteria)->limit($limit)->get($columns)->append($appends);
+    }
+
+    public function findOrderedLimited(array $criteria = [], array $orderBy = [""], int $limit = 10, array $columns = ['*'], array $relations = [], array $appends = []): ?Collection
+    {
+        if (empty($orderBy) || empty($orderBy[0])) throw new InvalidArgumentException('Column to order must be present');
+        return $this->model->with($relations)->where($criteria)->orderBy($orderBy[0], $orderBy[1])->limit($limit)->get($columns)->append($appends);
     }
 
 }
