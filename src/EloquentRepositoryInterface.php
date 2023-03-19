@@ -31,6 +31,14 @@ interface EloquentRepositoryInterface
     public function all(array $columns = ['*'], array $relations = []): Collection;
 
     /**
+     * Check whether a record exists (by id column) in the table.
+     *
+     * @param $recordId Record id
+     * @return bool True if record exists, False otherwise
+     */
+    public function existsById($recordId): bool;
+
+    /**
      * Find a row by record id and get the object as Model instance.
      *
      * @param mixed $recordId Record id

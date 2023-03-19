@@ -4,6 +4,8 @@ namespace EloquentRepo;
 
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use InvalidArgumentException;
 
 /**
  * Base implementation of repository interface to accommodate Eloquent entity models.
@@ -29,9 +31,19 @@ class EloquentBaseRepository implements EloquentRepositoryInterface
         return $this->model->with($relations)->get($columns);
     }
 
+    // select count('id') as aggregate from table_name where id = ?
+    public function existsById($recordId): bool {
+        $fld = $this->model->getKeyName();
+        return $this->model->where($fld, $recordId)->count($fld) > 0;
+    }
+
     public function findById($recordId, array $columns = ['*'], array $relations = [], array $appends = []): ?Model
     {
-        return $this->model->select($columns)->with($relations)->findOrFail($recordId)->append($appends);
+        try {
+            return $this->model->select($columns)->with($relations)->findOrFail($recordId)->append($appends);
+        } catch (ModelNotFoundException $e) {
+            return null;
+        }
     }
 
     public function findByCode($code, array $columns = ['*']): ?Model
@@ -55,7 +67,7 @@ class EloquentBaseRepository implements EloquentRepositoryInterface
     {
         if ($this->fixPayload($payload) == null) return false;
         $model = $this->findById($recordId);
-        return $model->update($payload);
+        return $model != null && $model->update($payload);
     }
 
     /**
@@ -92,17 +104,20 @@ class EloquentBaseRepository implements EloquentRepositoryInterface
 
     public function deleteById($recordId): bool
     {
-        return $this->findById($recordId)->delete();
+        $model = $this->findById($recordId);
+        return $model != null && $model->delete();
     }
 
     public function restoreById($recordId): bool
     {
-        return $this->findTrashedById($recordId)->restore();
+        $model = $this->findTrashedById($recordId);
+        return $model != null && $model->restore();
     }
 
     public function permanentlyDeleteById($recordId): bool
     {
-        return $this->findTrashedById($recordId)->forceDelete();
+        $model = $this->findTrashedById($recordId);
+        return $model != null && $model->forceDelete();
     }
 
     public function allTrashed(): Collection
@@ -112,7 +127,11 @@ class EloquentBaseRepository implements EloquentRepositoryInterface
 
     public function findTrashedById($recordId): ?Model
     {
-        return $this->model->withTrashed()->findOrFail($recordId);
+        try {
+            return $this->model->withTrashed()->findOrFail($recordId);
+        } catch (ModelNotFoundException $e) {
+            return null;
+        }
     }
 
     public function find(array $criteria = [], array $columns = ['*'], array $relations = [], array $appends = []): ?Collection
