@@ -26,6 +26,16 @@ class EloquentBaseRepository implements EloquentRepositoryInterface
         $this->model = $model;
     }
 
+    public function getModel(): Model
+    {
+        return $this->model;
+    }
+
+    public function getTableName(): string
+    {
+        return $this->model->getTable();
+    }
+
     public function all(array $columns = ['*'], array $relations = []): Collection
     {
         return $this->model->with($relations)->get($columns);

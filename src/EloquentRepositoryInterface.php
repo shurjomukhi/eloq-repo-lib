@@ -22,6 +22,20 @@ interface EloquentRepositoryInterface
 {
 
     /**
+     * Returns the eloquent model instance associated with this repository.
+     *
+     * @return Model
+     */
+    public function getModel(): Model;
+
+    /**
+     * Returns the table name associated with this repository.
+     *
+     * @return string Database table name
+     */
+    public function getTableName(): string;
+
+    /**
      * Get all rows from the database table as Collection of Model.
      *
      * @param array $columns Columns of a DB table
