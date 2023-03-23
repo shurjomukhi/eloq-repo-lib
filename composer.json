@@ -2,7 +2,7 @@
     "name": "shurjomukhi/eloquent-repo-lib",
     "description": "Generic repository pattern library for Eloquent Illuminate Entity models",
     "type": "library",
-    "version": "0.1.0",
+    "version": "0.2.0",
     "keywords": [
         "eloquent",
         "repository",
